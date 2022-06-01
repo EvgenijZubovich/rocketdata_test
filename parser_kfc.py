@@ -36,6 +36,8 @@ for restaurant_data in data_set:
         continue
     address_list = address.split(', ')[1:]
     result_address = ', '.join(address_list)
+    if not result_address:
+        continue
     working_hours = []
     if working_hours_data := restaurant_data.get('storePublic').get('openingHours').get('regularDaily'):
         for working_hour in working_hours_data:
@@ -44,10 +46,24 @@ for restaurant_data in data_set:
     else:
         working_hours.append('closed')
     data_obj = Data(
-        latlon=restaurant_data.get('storePublic').get('contacts').get('coordinates').get('geometry').get('coordinates'),
-        phones=[restaurant_data.get('storePublic').get('contacts').get('phoneNumber').replace(',', '').replace('доб. ', '').split(' ')],
-        name=restaurant_data.get('storePublic').get('title').get('ru'),
         address=result_address,
+        latlon=restaurant_data.get('storePublic').get('contacts').get('coordinates').get('geometry').get('coordinates'),
+        name=restaurant_data.get('storePublic').get('title').get('ru'),
+        phones=[
+            restaurant_data.get(
+                'storePublic',
+            ).get(
+                'contacts',
+            ).get(
+                'phoneNumber',
+            ).replace(
+                ',',
+                '',
+            ).replace(
+                'доб. ',                                                                                               '').split(
+                ' ',
+            ),
+        ],
         working_hours=working_hours
     )
     restaurants_objects.append(asdict(data_obj))
