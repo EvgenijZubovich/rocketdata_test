@@ -45,7 +45,7 @@ for restaurant_data in data_set:
         working_hours.append('closed')
     data_obj = Data(
         latlon=restaurant_data.get('storePublic').get('contacts').get('coordinates').get('geometry').get('coordinates'),
-        phones=[restaurant_data.get('storePublic').get('contacts').get('phoneNumber')],
+        phones=[restaurant_data.get('storePublic').get('contacts').get('phoneNumber').replace(',', '').replace('доб. ', '').split(' ')],
         name=restaurant_data.get('storePublic').get('title').get('ru'),
         address=result_address,
         working_hours=working_hours
