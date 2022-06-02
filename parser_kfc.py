@@ -60,7 +60,7 @@ for restaurant_data in data_set:
                 ',',
                 '',
             ).replace(
-                'доб. ',                                                                                               '').split(
+                'доб. ', '').split(
                 ' ',
             ),
         ],
